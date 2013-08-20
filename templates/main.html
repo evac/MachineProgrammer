@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<div class="container">
+
+	<!-- HEADER -->
+	<div class="row" style="margin-bottom: 0;">
+		<h1 class="header">Your Assembly Programmer</h1>
+	</div>
+
+	<!-- TEST CASES -->
+	<div class="row">
+
+		<!-- IMAGE -->
+		<div class="span5 offset1">
+			<img src="{{url_for('static', filename='img/robot.png')}}" />
+		</div>
+
+		<!-- TEST CASES -->
+		<div class="span5">
+
+
+			<div class="desc">
+				<h3 class="inst">Instructions</h3>
+				<p>
+					To create your desired program, add inputs (separated by commas) and the result that it should output. It's equivalent to writing simple test cases! This proof of concept can currently take in integers for simple math functions.
+				</p>
+			</div>
+
+
+			<!-- FORM -->
+			<form id="testcases" method="POST" action="">
+				<table id="cases" class="table">
+					<thead>
+						<tr>
+							<th><h3>Inputs</h3></th>
+							<th><h3>Output</h3></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<input type="text" class="inputs" name="inputs1" id="inputs1" />
+							</td>
+							<td>
+								<input type="text" class="output" name="output" class="output" value="200" />
+								<div class="remove"><i class="icon-remove"></i></div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div href="#" id="add-test" class="button add"><i class="icon-plus"></i></div>
+
+
+				<button type="submit" class="button submit">Start</button>
+			</form>
+		</div>
+	</div>
+
+	<!-- OUTPUT -->
+	<div class="row" id="program">
+		<div class="result">
+			<h3 class="subheader">What Program Do You Need?</h3>
+
+			<div id="output">
+
+				<!-- LOGS -->
+				<div id="logs">
+					<div class="scroll">
+					</div>
+
+					<!-- OUTPUT -->
+				</div><div id="result" class="well">
+					<div class="scroll">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+{% endblock %}

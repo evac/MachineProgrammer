@@ -3,9 +3,11 @@ import envoy
 import template
 from colors import bcolors
 import asm
+from push import Pusher
 
 FILE = "output"
 LINK = "main"
+PROGRAM_COUNT = 0
 
 # return instructions in formatted string form
 def format_instructions(instructions):
@@ -13,9 +15,9 @@ def format_instructions(instructions):
 
     for command in instructions:
         if command[0] == 'idiv':
-            result += "\tmov\tedx, 0\n"
+            result += "  mov  edx, 0\n"
 
-        result += "\t%s\t%s\n" %(command[0], ", ".join(command[1]))
+        result += "  %s  %s\n" %(command[0], ", ".join(command[1]))
 
     return result
 
@@ -23,7 +25,7 @@ def format_cmd_instructions(instructions):
     result = ""
 
     for command in instructions:
-        result += "%s\t%s\n" %(command[0], ", ".join(command[1]))
+        result += "%s  %s\n" %(command[0], ", ".join(command[1]))
 
     return result
 
@@ -40,27 +42,18 @@ def format_data(input):
 
         if datatype is int:
             var_name = "num%d" %(i+1)
-            data += "\t%s: equ %d" %(var_name, var)
+            data += "  %s: equ %d\n" %(var_name, var)
             variables.append(var_name)
         elif datatype is str:
             var_name = "str%d" %(i+1)
             var_len = "%sLen" % var_name
-            data += "\t%s: db '%s', 0\n" %(var_name, var)
-            data += "\t%s: equ $-%s" %(var_len, var_name)
+            data += "  %s: db '%s', 0\n" %(var_name, var)
+            data += "  %s: equ $-%s" %(var_len, var_name)
             variables.extend([var_name, var_len])
-        elif datatype is list:
-            pass
-        elif datatype is dict:
-            pass
-        else:
-            print "Not a data type"
-            pass
-
-        data += "\n"
 
     for i in range(len(variables)):
         var = variables[i]
-        inst += "\tmov  %s, %s\n" %(asm.OPERANDS[i], var)
+        inst += "  mov  %s, %s\n" %(asm.OPERANDS[i], var)
 
     return data, inst, variables
 
@@ -77,8 +70,9 @@ def write_template(program, input):
     # write template to file
     f = open('%s.asm' %FILE, 'w')
     f.write(code)
-
     f.close()
+
+    return code
 
 def match_type(result, test):
     convert = get_type_func(test)
@@ -112,11 +106,17 @@ def get_type_func(test):
 
 def compile(program):
     # try execute file
+    global PROGRAM_COUNT
     weight = 1
+    pusher = Pusher()
 
-    print "="*20
-    print format_cmd_instructions(program).strip()
-    print "-"*20
+
+    PROGRAM_COUNT += 1
+
+    pusher.addstyle("="*34)
+    pusher.addstyle("Program #%d" %PROGRAM_COUNT)
+    pusher.addstyle("-"*51)
+    pusher.add("<br />"*1)
 
     for i in asm.INPUTS:
         match = False
@@ -126,17 +126,22 @@ def compile(program):
         write_template(program, i)
         result = execute(FILE, LINK)
 
-        print "Result ", result
         if match_type(result, test):
-            print bcolors.GREEN + "%s >> %s\tSUCCESS\n" %(i[0], result) + bcolors.ENDC
+            # print bcolors.GREEN + "%s >> %s\tSUCCESS\n" %(i[0], result) + bcolors.ENDC
+            pusher.add("<span class='success'>%s >> %s</span>" %(i[0], result))
+            pusher.add("<span class='success'>[SUCCESS]</span>" %(i[0], result))
             match = True
         else:
-            print bcolors.RED + "%s >> %s\tNO MATCH\n" %(i[0], result) + bcolors.ENDC
+            # print bcolors.RED + "%s >> %s\tNO MATCH\n" %(i[0], result) + bcolors.ENDC
+            pusher.add("<span class='reject'>%s >> %s</span>" %(i[0], result))
+            pusher.add("<span class='success'>[REJECT]</span>" %(i[0], result))
 
         if not match:
             weight = 0
             break
 
+    pusher.add("<br />"*1)
+    pusher.push()
     return (weight,)
 
 def execute(filename, link):
@@ -155,37 +160,12 @@ def execute(filename, link):
     return output.std_out
 
 
-################ TEST CODE ################
-def sample_program():
-    return [("add", ["edx", "ecx"]), ("push", ["edx"])]
-
-def generate_test_commands(input_count):
-    commands = []
-    LINES = 3
-
-    for i in range(LINES):
-        commands.extend(asm.random_instruction(input_count))
-
-    return commands
-
-def test_write():
-    program = sample_program()
-
-    for i in asm.INPUTS:
-        write_template(program, i)
-
-################ END CODE ################
-
-
-
 if __name__ == '__main__':
-    output = execute(FILE, LINK)
-    print "Result: " + output
+    # output = execute(FILE, LINK)
+    # print "Result: " + output
 
     # result = asm.random_instruction()
     # print result
     # prog = sample_program()
     # compile(prog)
-
-    # test_write()
     pass

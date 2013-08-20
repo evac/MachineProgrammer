@@ -1,0 +1,139 @@
+<html>
+<head>
+
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Josefin+Slab:300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}" type="text/css" media ="screen"/>
+
+	<script src="{{url_for('static', filename='js/jquery-2.0.3.min.js')}}" type="text/javascript" charset="utf-8"></script>
+	<script src="{{url_for('static', filename='js/bootstrap.min.js')}}" type="text/javascript" charset="utf-8"></script>
+	<script src="{{url_for('static', filename='js/growinput.js')}}" type="text/javascript" charset="utf-8"></script>
+	<script src="{{url_for('static', filename='js/textboxlist.js')}}" type="text/javascript" charset="utf-8"></script>
+
+  <script src="http://js.pusher.com/2.1/pusher.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  </script>
+
+</head>
+<body>
+  {% block body %}{% endblock %}
+
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+
+    // Enable pusher logging - don't include this in production
+    Pusher.log = function(message) {
+      if (window.console && window.console.log) {
+        window.console.log(message);
+      }
+    };
+
+    var pusher = new Pusher('2049f32f18b0865b213e');
+    var channel = pusher.subscribe('evolution');
+		var $logs = $('#logs .scroll');
+    channel.bind('logs', function(data) {
+				console.log("Event:" + data)
+				if (typeof data.output != "undefined"){
+					line = "<pre>" + data.output + "</pre>"
+					$("#result .scroll").append(line);
+					if (data.output != "No successful program so far. Try again?") {
+	          $("#program .subheader").text("Program Ready For Pick-Up")
+					} else {
+	          $("#program .subheader").text("Give It Another Go?")
+					}
+				} else {
+					line = "<span>" + data.log + "</span>";
+		    	$logs.append(line);
+				}
+			$logs.scrollTop( $logs.get(0).scrollHeight );
+    });
+
+
+		var list = []
+
+		// Initialize Inputs
+		var initInput = new $.TextboxList('#inputs1', {bitsOptions: {
+			box: {deleteButton: false},
+			editable: {addKeys: [188]}
+		}});
+		initInput.add('100').add('100');
+		list.push(initInput)
+
+		/* Add Test Fields */
+		$('#add-test').click(function() {
+			var $list = $("#cases").children("tbody")
+			var num = $list.children().length + 1
+
+			var newField = "<tr><td><input type='text' class='inputs' name='inputs" + num
+							+ "' id='inputs" + num + "' /></td><td><input type='text' class='output' name='output' class='output' /> <div class='remove'><i class='icon-remove'></i></div></td></tr>"
+			$list.append(newField)
+
+			var selector = "#inputs" + num
+			var field = new $.TextboxList(selector, {bitsOptions: {
+				box: {deleteButton: false},
+				editable: {addKeys: [188, 13]}
+			}});
+			list.push(field)
+		});
+
+		/* Delete Test */
+		$cases = $('#cases')
+		$cases.on('click', ".remove", function() {
+			$this = $(this);
+			$this.parent().parent('tr').remove();
+		})
+
+
+		/* AJAX */
+	  $('.submit').on('click', function(e) {
+	  		e.preventDefault();
+
+	  		var outputs = []
+	  		$('.output').each(function() {
+	  			val = $(this).val();
+	  			outputs.push(Number(val));
+	  		});
+
+
+	  		var values = []
+	  		for (var i = 0; i < list.length; i++) {
+	  			val = list[i].getValues()
+	  			var inputs = [];
+	  			inputs.push(outputs[i])
+	  			inputs = val.map(function(v) {
+	  				return Number(v[1]);
+	  			})
+	  			values.push([inputs, outputs[i]])
+	  		}
+
+	  		var data = {"inputs": JSON.stringify(values)}
+
+	     	console.log(data)
+
+	      $.post("/run_program", data, function(result){
+	      });
+
+        $("#program .subheader").text("Program Is Being Assembled...")
+
+				line = "<span>Preparing...</span>";
+	    	$logs.append(line);
+
+	    	$testcases = $("#testcases")
+	    	$testcases.addClass("disabled")
+	    	$testcases.find('.submit, #add-test').attr("disabled", true);
+
+	      /* Scroll Down */
+		    $target = $("#result");
+		    $('html, body').stop().animate({
+		        'scrollTop': $target.offset().top
+		    }, 800, 'swing', function () {
+		        window.location.hash = target;
+		    });
+		  });
+
+	});
+</script>
+
+</body>
+</html>

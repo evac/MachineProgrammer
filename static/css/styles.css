@@ -1,0 +1,429 @@
+
+/* General
+------------------------------------------------------------*/
+
+body {
+	font-family: "HelveticaNeue-Light", "Helvetica Neue",Helvetica,Arial,sans-serif;
+	letter-spacing: 1px;
+	line-height: 120%;
+	color: #BBB;
+	background-image: url("/static/img/pw_pattern.png");
+	text-shadow: 0 1px rgba(255,255,255,.5);
+}
+
+label {
+	cursor: default;
+}
+
+h1, h2, h3, h4, h5 {
+	font-family: "Josefin Slab";
+	line-height: 120%;
+	color: #BBB;
+	letter-spacing: 1px;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.row {
+	margin-bottom: 80px;
+}
+
+/* Headers
+------------------------------------------------------------*/
+.header {
+	margin: 40px 0;
+	text-align: center;
+	font-weight: 300;
+	font-size: 80px;
+}
+
+.subheader {
+	font-weight: 100;
+	font-size: 50px;
+}
+
+/* Desc
+------------------------------------------------------------*/
+
+.inst {
+	margin: 0;
+}
+
+.desc {
+	width: 90%;
+	margin: auto;
+	margin-bottom: 20px;
+	font-size: 18px;
+	line-height: 120%;
+}
+
+
+
+/* Test Case Inputs
+------------------------------------------------------------*/
+
+form {
+	margin-left: 20px;
+}
+
+.table {
+	max-width: 400px;
+	margin-bottom: 0;
+}
+
+#testcases tr {
+	vertical-align: bottom;
+}
+
+.table th h3 {
+	padding-bottom: 5px; 
+	line-height: 100%;
+	border-bottom: 1px solid #DDD;
+}
+
+.table th, .table td {
+	padding: 0;
+	border: none;
+}
+
+tr td:first-child {
+	width: 63%;
+}
+
+#testcases .textboxlist-bits, #testcases .output {
+	margin-bottom: 10px;
+}
+
+/* Text Box List */
+
+.textboxlist {
+	cursor: text;
+	font-family: monospace;
+}
+
+.textboxlist-bits {
+	display: inline-block;
+	width: 100%;
+	margin-left: 0;
+	padding: 2px 6px 6px;
+	margin-bottom: 8px;
+	font-size: 14px;
+	line-height: 20px;
+	color: #666;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	vertical-align: middle;
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	-webkit-transition: border linear .2s, box-shadow linear .2s;
+	-moz-transition: border linear .2s, box-shadow linear .2s;
+	-o-transition: border linear .2s, box-shadow linear .2s;
+	transition: border linear .2s, box-shadow linear .2s;
+}
+
+.textboxlist-bit {
+	list-style-type: none;
+	float: left;
+	display: block;
+	padding: 0;
+	cursor: default;
+}
+
+.textboxlist-bit-box, .textboxlist-bits input {
+	height: 30px;
+	margin: 4px;
+	margin-bottom: 0;
+	line-height: 30px;
+}
+
+.textboxlist-bit-box {
+	position: relative;
+	min-width: 20px;
+	margin-left: 0;
+	padding: 0 4px;
+	border-radius: 4px;
+	border: 1px solid #CAD8F3;
+	background: #DEE7F8;
+	cursor: default;
+	font-size: 18px;
+	text-align: center;
+}
+
+/* Active Input */
+.textboxlist-bits input,
+.textboxlist-bits input:hover,
+.textboxlist-bits input:active,
+.textboxlist-bits input:focus {
+	padding: 0;
+	border: none;
+	box-shadow: none;
+	font-size: 20px;
+}
+
+.textboxlist-bit-box-focus {
+	border-color: #547BC7;
+	background: #598BEC;
+	color: #E8F0FF;
+	text-shadow: 0 -1px #082C72;
+}
+
+
+/* Test Output */
+
+input.output {
+	width: 100px;
+	height: 44px;
+	margin-left: 6px;
+	padding: 4px 8px;
+	border-color: #BDE5C0 #B4E2BA #ADDBB3;
+	font-size: 20px;
+	color: #8ACC8F;
+	text-align: center;
+}
+
+.output:hover {
+	border-color: #ACDDAE #A1D8A8 #94CC9D;
+}
+
+#cases .output:focus {
+	background: #DEF8DE;
+	color: #5EB66C;
+	box-shadow: none;
+	border-color: rgba(82, 236, 94, 0.8);
+}
+
+/* Delete Button */
+
+.remove {
+	margin: 0 5px;
+	display: inline-block;
+	font-size: 30px;
+	opacity: .2;
+	cursor: pointer;
+	transition: all .2s ease;
+}
+
+.remove:hover {
+	opacity: .3;
+	transition: all .2s ease;
+}
+
+.remove:active {
+	opacity: .4;
+}
+
+/* Population */
+
+#testcases .pop {
+	width: 60px;
+	height: 40px;
+	text-align: center;
+	font-size: 18px;
+}
+
+/* Submit Button */
+.button {
+	position: relative;
+	display: block;
+	border: none;
+	color: #fff;
+	background: none;
+	cursor: pointer;
+	text-transform: uppercase;
+	letter-spacing: 4px;
+	font-weight: bold;
+	outline: none;
+	border-radius: 5px;
+}
+
+.button:hover {
+	top: 2px;
+}
+
+.button:active {
+	top: 6px;
+}
+
+/* Add */
+
+.add {
+	display: inline-block;
+	background: #D2D2D2;
+	box-shadow: 0 5px #C2C2C2;
+	padding: 7px 10px;
+	font-size: 24px;
+	text-align: center;
+	text-shadow: 0 -1px rgba(0,0,0,.15);
+}
+
+.add i {
+	margin: 0 0 0 3px;
+}
+
+.add:hover {
+	box-shadow: 0 4px #C2C2C2;
+}
+
+.add:active {
+	box-shadow: 0 0 #C2C2C2;
+}
+
+
+
+/* Submit */
+
+.submit {
+	margin-top: 50px;
+	padding: 20px 80px;
+	background: #37AC6A;
+	box-shadow: 0 5px #3A9660;
+	font-size: 24px;
+	text-shadow: 0 -1px 1px #37724F;
+}
+
+.submit:hover {
+	box-shadow: 0 4px #3A9660;
+}
+
+.submit:active {
+	box-shadow: 0 0 #3A9660;
+}
+
+/* Disabled State
+------------------------------------------------------------*/
+
+#testcases.disabled .textboxlist-bits, #testcases.disabled input {
+	background: transparent;
+	border: none;
+	box-shadow: none;
+	margin-bottom: 0;
+}
+
+#testcases.disabled .remove, #testcases.disabled .add {
+	display: none;
+}
+
+#testcases button:disabled {
+	top: 6px;
+	background: #D2D2D2;
+	box-shadow: 0 0 #C2C2C2;
+	text-shadow: none;
+}
+
+/* Output
+------------------------------------------------------------*/
+
+.result {
+	text-align: center;
+	margin-bottom: 80px;
+}
+
+#program {
+	width: 760px;
+	margin: 40px auto 60px;
+}
+
+#program .label {
+}
+
+#logs, #result {
+	float: left;
+	position: relative;
+	width: 380px;
+	padding: 0;
+	height: 600px;
+	margin: 10px 0 0;
+	text-align: left;
+}
+
+.scroll {
+	overflow: auto;
+	height: 100%;
+	padding: 20px 30px;
+}
+
+/* Logs */
+#logs {
+	border: 1px solid;
+	border-radius: 5px 0 0 5px;
+	background-color: #333;
+	box-shadow: inset 0 0 20px rgba(0,0,0,.5);
+	text-shadow: none;
+}
+
+#logs span {
+	display: block;
+}
+
+#logs .success {
+	color: rgb(47, 158, 47);
+	font-weight: bold;
+}
+
+#logs .reject {
+	color: rgb(185, 66, 66);
+	font-weight: bold
+}
+
+/* Output */
+#result {
+	border-radius: 0 5px 5px 0;
+	font-family: Menlo, Monaco, monospace;
+	color: #888;
+}
+
+#result pre {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+
+/* Scrollbar */
+.result ::-webkit-scrollbar {
+	width: 10px;
+}
+
+.result ::-webkit-scrollbar-track-piece {
+	margin: 4px;
+}
+
+#result ::-webkit-scrollbar-track {
+	background-color: #f5f5f5;
+}
+
+#result ::-webkit-scrollbar-thumb {
+	background-color: rgba(0,0,0,.06);
+	border-radius: 3px 5px 5px 3px;
+	border-right: 3px solid #f5f5f5;
+	-webkit-transition: all .15s ease-out;
+	-moz-transition: all .15s ease-out;
+	-ms-transition: all .15s ease-out;
+	-o-transition: all .15s ease-out;
+	transition: all 0.2s ease-in-out;
+}
+
+
+#logs ::-webkit-scrollbar-track {
+	background-color: #333;
+	box-shadow: inset -3px 0 10px rgba(0,0,0,.2);
+}
+
+#logs ::-webkit-scrollbar-thumb {
+	background-color: rgba(255,255,255,.2);
+	border-radius: 3px 5px 5px 3px;
+	border-right: 3px solid #333;
+	-webkit-transition: all .15s ease-out;
+	-moz-transition: all .15s ease-out;
+	-ms-transition: all .15s ease-out;
+	-o-transition: all .15s ease-out;
+	transition: all 0.2s ease-in-out;
+}

@@ -3,7 +3,7 @@ import demo
 
 INPUTS = demo.add2int
 
-INSTRUCTIONS = ["mov", "mov", "mov", "mov", "mov", "push", "pop", "add", "sub", "cmp", "inc", "dec"] #, "imul", "idiv"]
+INSTRUCTIONS = ["mov", "mov", "mov", "push", "pop", "add", "sub", "cmp", "imul"]
 OPERANDS = ["eax", "ebx", "ecx", "edx", "ebp", "esi", "edi", "esp"]
 INST_OP_COUNT = {
     "mov": 2,
@@ -17,6 +17,11 @@ INST_OP_COUNT = {
     "imul": 2,
     "idiv": 1
 }
+
+
+def add_inputs(inputs):
+    global INPUTS
+    INPUTS = inputs
 
 # generate tuple of a random instruction and random registers
 def random_instruction(input_count):

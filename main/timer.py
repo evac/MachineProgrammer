@@ -1,7 +1,9 @@
 from time import time
+from push import Pusher
 
 START = None
 line = "="*40
+pusher = Pusher()
 
 def log (msg, elapsed=None):
     print line
@@ -10,6 +12,15 @@ def log (msg, elapsed=None):
         print "Elapsed time:", elapsed
     print line
     print
+
+    pusher.addstyle("="*34)
+    pusher.addstyle(msg)
+    if elapsed:
+        pusher.addstyle("Elapsed time: " + elapsed)
+    pusher.addstyle("="*34)
+    pusher.add("<br />")
+    pusher.push()
+
 
 def now():
     return format_time(time())
