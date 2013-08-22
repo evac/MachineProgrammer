@@ -12,7 +12,6 @@ section .text
   extern fflush
 
 main:
-
 %s
 %s
   call write
