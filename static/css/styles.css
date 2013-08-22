@@ -6,7 +6,7 @@ body {
 	font-family: "HelveticaNeue-Light", "Helvetica Neue",Helvetica,Arial,sans-serif;
 	letter-spacing: 1px;
 	line-height: 120%;
-	color: #BBB;
+	color: #AAA;
 	background-image: url("/static/img/pw_pattern.png");
 	text-shadow: 0 1px rgba(255,255,255,.5);
 }
@@ -51,6 +51,7 @@ h1, h2, h3, h4, h5 {
 
 .inst {
 	margin: 0;
+	color: #999;
 }
 
 .desc {
@@ -83,6 +84,7 @@ form {
 	padding-bottom: 5px; 
 	line-height: 100%;
 	border-bottom: 1px solid #DDD;
+	color: #999;
 }
 
 .table th, .table td {
@@ -94,85 +96,32 @@ tr td:first-child {
 	width: 63%;
 }
 
-#testcases .textboxlist-bits, #testcases .output {
+#testcases .inputs, #testcases .output {
 	margin-bottom: 10px;
 }
 
-/* Text Box List */
+/* Inputs */
 
-.textboxlist {
-	cursor: text;
-	font-family: monospace;
-}
-
-.textboxlist-bits {
+input.inputs {
 	display: inline-block;
 	width: 100%;
+	height: 44px;
 	margin-left: 0;
-	padding: 2px 6px 6px;
 	margin-bottom: 8px;
-	font-size: 14px;
-	line-height: 20px;
-	color: #666;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	vertical-align: middle;
 	background-color: #ffffff;
 	border: 1px solid #cccccc;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	-webkit-transition: border linear .2s, box-shadow linear .2s;
-	-moz-transition: border linear .2s, box-shadow linear .2s;
-	-o-transition: border linear .2s, box-shadow linear .2s;
-	transition: border linear .2s, box-shadow linear .2s;
-}
-
-.textboxlist-bit {
-	list-style-type: none;
-	float: left;
-	display: block;
-	padding: 0;
-	cursor: default;
-}
-
-.textboxlist-bit-box, .textboxlist-bits input {
-	height: 30px;
-	margin: 4px;
-	margin-bottom: 0;
-	line-height: 30px;
-}
-
-.textboxlist-bit-box {
-	position: relative;
-	min-width: 20px;
-	margin-left: 0;
-	padding: 0 4px;
-	border-radius: 4px;
-	border: 1px solid #CAD8F3;
-	background: #DEE7F8;
-	cursor: default;
-	font-size: 18px;
-	text-align: center;
-}
-
-/* Active Input */
-.textboxlist-bits input,
-.textboxlist-bits input:hover,
-.textboxlist-bits input:active,
-.textboxlist-bits input:focus {
-	padding: 0;
-	border: none;
-	box-shadow: none;
 	font-size: 20px;
+	color: #AAA;
 }
 
-.textboxlist-bit-box-focus {
-	border-color: #547BC7;
-	background: #598BEC;
-	color: #E8F0FF;
-	text-shadow: 0 -1px #082C72;
+input.inputs:hover {
+	border-color: #ccc;
+}
+
+input.inputs:focus {
+	box-shadow: none;
+	border-color: #ccc;
+	background: #f9f9f9;
 }
 
 
@@ -268,15 +217,25 @@ input.output {
 	margin: 0 0 0 3px;
 }
 
-.add:hover {
+.add:hover, .reset:hover {
 	box-shadow: 0 4px #C2C2C2;
 }
 
-.add:active {
+.add:active, .reset:active {
 	box-shadow: 0 0 #C2C2C2;
 }
 
+/* Reset */
 
+.reset {
+	display: inline-block;
+	margin-top: 20px;
+	background: #D2D2D2;
+	box-shadow: 0 5px #C2C2C2;
+	padding: 20px 80px;
+	font-size: 24px;
+	text-shadow: 0 -1px rgba(0,0,0,.15);
+}
 
 /* Submit */
 
@@ -297,10 +256,15 @@ input.output {
 	box-shadow: 0 0 #3A9660;
 }
 
+.error {
+	margin-top: 10px;
+}
+
+
 /* Disabled State
 ------------------------------------------------------------*/
 
-#testcases.disabled .textboxlist-bits, #testcases.disabled input {
+#testcases.disabled .inputs, #testcases.disabled input {
 	background: transparent;
 	border: none;
 	box-shadow: none;
@@ -329,6 +293,7 @@ input.output {
 #program {
 	width: 760px;
 	margin: 40px auto 60px;
+	text-align: center;
 }
 
 #program .label {
