@@ -79,7 +79,38 @@
 		</div>
 		<button class="reset button">Create another program?</button>
 	</div>
-
-
 </div>
+
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		var $logs = $('#logs .scroll');
+		$reset = $('.reset')
+
+    // Enable pusher logging
+    var channel = "{{channel}}"
+    var key = "{{key}}"
+    var pusher = new Pusher(key);
+    var channel = pusher.subscribe(channel);
+    channel.bind('logs', function(data) {
+				console.log("Event:" + data)
+				if (typeof data.output != "undefined"){
+					line = "<pre>" + data.output + "</pre>"
+					$("#result .scroll").append(line);
+					if (data.output != "No successful program so far. Try again?") {
+	          $("#program .subheader").text("Program Ready For Pick-Up")
+	          $reset.text("Create another program").toggle(true)
+					} else {
+	          $("#program .subheader").text("Give It Another Go?")
+	          $reset.text("Give it another go").toggle(true)
+
+					}
+				} else {
+					line = "<span>" + data.log + "</span>";
+		    	$logs.append(line);
+				}
+			$logs.scrollTop($logs.get(0).scrollHeight);
+    });
+  });
+</script>
+
 {% endblock %}

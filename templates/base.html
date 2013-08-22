@@ -19,31 +19,7 @@
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
 		$reset = $('.reset')
-
-    // Enable pusher logging
-    var pusher = new Pusher('9eb76d1f686de8651d46');
-    var channel = pusher.subscribe('evolution');
 		var $logs = $('#logs .scroll');
-    channel.bind('logs', function(data) {
-				console.log("Event:" + data)
-				if (typeof data.output != "undefined"){
-					line = "<pre>" + data.output + "</pre>"
-					$("#result .scroll").append(line);
-					if (data.output != "No successful program so far. Try again?") {
-	          $("#program .subheader").text("Program Ready For Pick-Up")
-	          $reset.text("Create another program").toggle(true)
-					} else {
-	          $("#program .subheader").text("Give It Another Go?")
-	          $reset.text("Give it another go").toggle(true)
-
-					}
-				} else {
-					line = "<span>" + data.log + "</span>";
-		    	$logs.append(line);
-				}
-			$logs.scrollTop($logs.get(0).scrollHeight);
-    });
-
 
 		/* Add Inputs */
 		$('#add-test').click(function() {

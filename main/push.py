@@ -1,14 +1,28 @@
 import pusher
 
-p = pusher.Pusher(
-  app_id='52211',
-  key='9eb76d1f686de8651d46',
-  secret='975144a7f85eced304f6'
-)
+APP_ID = None
+KEY = None
+SECRET = None
+CHANNEL = None
+PUSHER = None
+
+def add_settings(settings):
+    global APP_ID
+    global KEY
+    global SECRET
+    global CHANNEL
+    global PUSHER
+
+    APP_ID = settings["app_id"]
+    KEY = settings["key"]
+    SECRET = settings["secret"]
+    CHANNEL = settings["channel"]
+    PUSHER = pusher.Pusher(APP_ID, KEY, SECRET)
+
 
 class Pusher(object):
     def __init__(self, event="log"):
-        self.channel = 'evolution'
+        self.channel = CHANNEL
         self.message = ""
         self.event = event
 
@@ -35,7 +49,7 @@ class Pusher(object):
             data = {'log': self.message}
 
         # push message
-        p[self.channel].trigger('logs', data)
+        PUSHER[self.channel].trigger('logs', data)
 
         # reset message
         self.message = ""
