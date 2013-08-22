@@ -280,6 +280,7 @@ input.output {
 	background: #D2D2D2;
 	box-shadow: 0 0 #C2C2C2;
 	text-shadow: none;
+	cursor: default;
 }
 
 /* Output
