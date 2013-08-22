@@ -8,9 +8,6 @@
 
 	<script src="{{url_for('static', filename='js/jquery-2.0.3.min.js')}}" type="text/javascript" charset="utf-8"></script>
 	<script src="{{url_for('static', filename='js/bootstrap.min.js')}}" type="text/javascript" charset="utf-8"></script>
-	<script src="{{url_for('static', filename='js/growinput.js')}}" type="text/javascript" charset="utf-8"></script>
-	<script src="{{url_for('static', filename='js/textboxlist.js')}}" type="text/javascript" charset="utf-8"></script>
-
   <script src="http://js.pusher.com/2.1/pusher.min.js" type="text/javascript"></script>
   <script type="text/javascript">
   </script>
@@ -21,15 +18,10 @@
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
+		$reset = $('.reset')
 
-    // Enable pusher logging - don't include this in production
-    Pusher.log = function(message) {
-      if (window.console && window.console.log) {
-        window.console.log(message);
-      }
-    };
-
-    var pusher = new Pusher('2049f32f18b0865b213e');
+    // Enable pusher logging
+    var pusher = new Pusher('9eb76d1f686de8651d46');
     var channel = pusher.subscribe('evolution');
 		var $logs = $('#logs .scroll');
     channel.bind('logs', function(data) {
@@ -39,82 +31,166 @@
 					$("#result .scroll").append(line);
 					if (data.output != "No successful program so far. Try again?") {
 	          $("#program .subheader").text("Program Ready For Pick-Up")
+	          $reset.text("Create another program").toggle(true)
 					} else {
 	          $("#program .subheader").text("Give It Another Go?")
+	          $reset.text("Give it another go").toggle(true)
+
 					}
 				} else {
 					line = "<span>" + data.log + "</span>";
 		    	$logs.append(line);
 				}
-			$logs.scrollTop( $logs.get(0).scrollHeight );
+			$logs.scrollTop($logs.get(0).scrollHeight);
     });
 
 
-		var list = []
-
-		// Initialize Inputs
-		var initInput = new $.TextboxList('#inputs1', {bitsOptions: {
-			box: {deleteButton: false},
-			editable: {addKeys: [188]}
-		}});
-		initInput.add('100').add('100');
-		list.push(initInput)
-
-		/* Add Test Fields */
+		/* Add Inputs */
 		$('#add-test').click(function() {
 			var $list = $("#cases").children("tbody")
 			var num = $list.children().length + 1
 
-			var newField = "<tr><td><input type='text' class='inputs' name='inputs" + num
-							+ "' id='inputs" + num + "' /></td><td><input type='text' class='output' name='output' class='output' /> <div class='remove'><i class='icon-remove'></i></div></td></tr>"
-			$list.append(newField)
-
-			var selector = "#inputs" + num
-			var field = new $.TextboxList(selector, {bitsOptions: {
-				box: {deleteButton: false},
-				editable: {addKeys: [188, 13]}
-			}});
-			list.push(field)
+			var newInput = "<tr><td><input type='text' class='inputs'/></td><td><input type='text' class='output' /> <div class='remove'><i class='icon-remove'></i></div></td></tr>"
+			$list.append(newInput)
 		});
 
 		/* Delete Test */
-		$cases = $('#cases')
+		$cases = $('#cases');
 		$cases.on('click', ".remove", function() {
 			$this = $(this);
 			$this.parent().parent('tr').remove();
-		})
+		});
 
 
-		/* AJAX */
+		function isInt(n) {
+		   return typeof n === 'number' && n % 1 == 0;
+		}
+
+		function notEmpty(str) {
+			return !str;
+		}
+
+		$error = $('.error')
+		function showError(msg) {
+			$error.text(msg).toggle(true);
+		}
+
+
+		/* RESET */
+		$reset.toggle(false)
+		$reset.on('click', function(e) {
+
+			// Reactivate
+    	$testcases = $("#testcases")
+    	$testcases.removeClass("disabled")
+    	$testcases.find('.submit, #add-test').attr("disabled", false);
+
+			$(".scroll").text("")
+			$(this).toggle(false)
+
+      /* Scroll Up */
+	    $('html, body').stop().animate({
+	        'scrollTop': 0
+	    }, 800, 'swing', function () {
+	        window.location.hash = 0;
+	    });
+
+		});
+
+
+		/* SUBMIT */
 	  $('.submit').on('click', function(e) {
-	  		e.preventDefault();
-
-	  		var outputs = []
-	  		$('.output').each(function() {
-	  			val = $(this).val();
-	  			outputs.push(Number(val));
-	  		});
+  		e.preventDefault();
+	  	VALID_INPUTS = true;
+  		var outputs = []
+  		var inputs = []
 
 
-	  		var values = []
-	  		for (var i = 0; i < list.length; i++) {
-	  			val = list[i].getValues()
-	  			var inputs = [];
-	  			inputs.push(outputs[i])
-	  			inputs = val.map(function(v) {
-	  				return Number(v[1]);
-	  			})
-	  			values.push([inputs, outputs[i]])
+  		// Get outputs
+  		$('.output').each(function() {
+  			val = $(this).val();
+  			if (!val) {
+  				VALID_INPUTS = false;
+  				error = "Uh oh, you have empty inputs."
+	  			showError(error);
+	  			return error
+  			} else {
+	  			value = Number(val);
+
+	  			// Check for invalid input
+	  			if (isInt(value)) {
+	  				outputs.push(value);
+	  			} else {
+	  				VALID_INPUTS = false;
+	  				error = "Uh oh, there are invalid inputs. Make sure your inputs are all integers."
+		  			showError(error);
+		  			return error
+	  			};
 	  		}
+  		});
 
-	  		var data = {"inputs": JSON.stringify(values)}
 
-	     	console.log(data)
+  		// Get inputs
+  		if (VALID_INPUTS) {
+  			$inputs = $('.inputs')
+
+  			input_len = $inputs.length;
+  			if (input_len == outputs.length) {
+  				count = 0
+
+		  		$inputs.each(function() {
+		  			inputList = $(this).val();
+		  			values = inputList.split(",")
+
+		  			// Check for invalid input
+		  			for(var i = 0; i < values.length; i++) {
+			  			if (!values[i]) {
+			  				VALID_INPUTS = false;
+			  				error = "Uh oh, you have empty inputs."
+				  			showError(error);
+				  			return error
+			  			} else {
+
+				  			integer = Number(values[i]);
+
+				  			if (isInt(integer)) {
+				  				values[i] = integer;
+				  			} else {
+				  				VALID_INPUTS = false;
+				  				error = "Uh oh, there are invalid inputs. Make sure your inputs are all integers."
+					  			showError(error);
+					  			return error
+				  			};
+				  		};
+		  			};
+
+		  			if (VALID_INPUTS) {
+			  			inputs.push([values, outputs[count]]);
+		  			}
+
+		  			count++;
+		  		
+		  		});
+		  	} else {
+  				VALID_INPUTS = false;
+  				error = "Uh oh, you're missing some inputs."
+	  			showError(error);
+	  			return error
+		  	}
+	  	}
+
+
+  		// Check for valid inputs
+  		if (VALID_INPUTS) {
+  			$error.toggle(false);
+
+	  		var data = {"inputs": JSON.stringify(inputs)};
+	     	console.log(data);
 
 	      $.post("/run_program", data, function(result){
 	      });
 
-        $("#program .subheader").text("Program Is Being Assembled...")
+	      $("#program .subheader").text("Program Is Being Assembled...");
 
 				line = "<span>Preparing...</span>";
 	    	$logs.append(line);
@@ -128,9 +204,10 @@
 		    $('html, body').stop().animate({
 		        'scrollTop': $target.offset().top
 		    }, 800, 'swing', function () {
-		        window.location.hash = target;
+		        window.location.hash = $target;
 		    });
-		  });
+		  };
+	  });
 
 	});
 </script>
