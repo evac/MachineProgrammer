@@ -77,14 +77,20 @@
 				</div>
 			</div>
 		</div>
-		<button class="reset button">Create another program?</button>
+		<button class="action exit button">Stop Program</button>
+		<button class="action reset button">Create another program</button>
 	</div>
 </div>
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
 		var $logs = $('#logs .scroll');
-		$reset = $('.reset')
+		var $action = $('.action');
+		var $reset = $('.reset');
+		var $exit = $('.exit')
+		var EXIT = false
+
+		$action.toggle(false)
 
     // Enable pusher logging
     var channel = "{{channel}}"
@@ -92,24 +98,76 @@
     var pusher = new Pusher(key);
     var channel = pusher.subscribe(channel);
     channel.bind('logs', function(data) {
-				console.log("Event:" + data)
+    	if (EXIT) {
+				toggleBtn(true);			
+				$action.text("Give it another go");
+			} else {
 				if (typeof data.output != "undefined"){
 					line = "<pre>" + data.output + "</pre>"
 					$("#result .scroll").append(line);
 					if (data.output != "No successful program so far. Try again?") {
-	          $("#program .subheader").text("Program Ready For Pick-Up")
-	          $reset.text("Create another program").toggle(true)
+	          $("#program .subheader").text("Program Ready For Pick-Up");
+	          $action.text("Create another program");
 					} else {
 	          $("#program .subheader").text("Give It Another Go?")
-	          $reset.text("Give it another go").toggle(true)
-
+	          $action.text("Give it another go");
 					}
+
+					toggleBtn(true);			
 				} else {
 					line = "<span>" + data.log + "</span>";
 		    	$logs.append(line);
 				}
+			};
 			$logs.scrollTop($logs.get(0).scrollHeight);
     });
+
+    // toggle reset/exit buttons
+    function toggleBtn(reset) {
+    	if (reset) {
+	    	$exit.toggle(false);
+	    	$reset.toggle(true);
+	    } else {
+	    	$exit.toggle(true);
+	    	$reset.toggle(false);
+	    }
+    }
+
+		/* STOP PROGRAM */
+	  $exit.on('click', function(e) {
+	  	EXIT = true;
+      $.post("/exit_program", data=null, function(result){
+      	$logs.append("<span>==================================</span>")
+    		$logs.append("<span style='text-align: center;'>EXIT PROGRAM</span>")
+      	$logs.append("<span>==================================</span>")
+      	$logs.append("<br /><br />")
+				$logs.scrollTop($logs.get(0).scrollHeight);
+      });
+    });
+
+
+ 		/* RESET PROGRAM */
+		$reset.on('click', function(e) {
+			EXIT = false
+
+			// Reactivate
+    	$testcases = $("#testcases")
+    	$testcases.removeClass("disabled")
+    	$testcases.find('.submit, #add-test').attr("disabled", false);
+
+			$(".scroll").text("")
+			$(this).toggle(false)
+
+      /* Scroll Up */
+	    $('html, body').stop().animate({
+	        'scrollTop': 0
+	    }, 800, 'swing', function () {
+	        window.location.hash = 0;
+	    });
+
+		});
+
+
   });
 </script>
 
