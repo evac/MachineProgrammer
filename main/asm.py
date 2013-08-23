@@ -1,7 +1,9 @@
 import random
 
+# SET OF AVAILABLE ASSEMBLY INSTRUCTIONS
 INSTRUCTIONS = ["mov", "add", "sub", "imul", "inc", "dec"]
-OPERANDS = ["eax", "ebx", "ecx", "edx", "ebp", "esi", "edi", "esp"]
+
+# VALID NUMBER OF OPERANDS FOR EACH INSTRUCTION
 INST_OP_COUNT = {
     "mov": 2,
     "add": 2,
@@ -10,6 +12,7 @@ INST_OP_COUNT = {
     "inc": 1,
     "imul": 2,
 }
+OPERANDS = ["eax", "ebx", "ecx", "edx", "ebp", "esi", "edi", "esp"]
 
 # generate tuple of a random instruction and random registers
 def random_instruction(input_count):
