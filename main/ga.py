@@ -12,6 +12,7 @@ POPULATION = 0
 GENERATIONS = 0
 INPUTS = []
 END_EVOLUTION = False
+EXIT_PROGRAM = False
 HOF = tools.HallOfFame(1)
 toolbox = base.Toolbox()
 
@@ -27,16 +28,25 @@ def add_settings(settings):
     global POPULATION
     global GENERATIONS
     global END_EVOLUTION
+    global EXIT_PROGRAM
 
     END_EVOLUTION = False
     POPULATION = settings["population"]
     GENERATIONS = settings["max_generations"]
     execute.PROGRAM_COUNT = 1
-
+    EXIT_PROGRAM = False
 
 # Evaluation function
 def eval_program(program):
     global END_EVOLUTION
+
+    if EXIT_PROGRAM:
+        pusher = Pusher()
+        pusher.addstyle("="*34)
+        pusher.addstyle("EXIT PROGRAM")
+        pusher.addstyle("="*34)
+        return None
+
 
     if END_EVOLUTION:
         result = None
@@ -60,7 +70,7 @@ def init_population(input_len):
     creator.create("Program", list, fitness=creator.FitnessMax)
     toolbox.register("instruction", asm.random_instruction, input_len)
     toolbox.register("program", tools.initRepeat, creator.Program, 
-        toolbox.instruction, 1)
+        toolbox.instruction, 2)
     toolbox.register("population", tools.initRepeat, list, toolbox.program)
 
     # Log progress
@@ -114,16 +124,15 @@ def main():
             offspring = toolbox.select(pop, len(pop))
             offspring = list(map(toolbox.clone, offspring))
 
-            if program_size == 0:
-                # Addstyle new line of instruction
-                pop2 = toolbox.population(n=len(offspring))
-                for i in range(len(offspring) - 1):
-                    # if random.random() < .5:
-                    offspring[i].extend(pop2.pop())
+            # if program_size == 0:
+            #     # Add new line of instruction
+            #     pop2 = toolbox.population(n=len(offspring))
+            #     for i in range(len(offspring) - 1):
+            #         offspring[i].extend(pop2.pop())
 
-                program_size = g**g
-            else:
-                program_size -= 1
+            #     program_size = g**g
+            # else:
+            #     program_size -= 1
 
             
             # Apply crossover and mutation on the offspring

@@ -18,8 +18,13 @@
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
-		$reset = $('.reset')
+		var $action = $('#action');
+		var $reset = $('.reset');
+		var $exit =  $('.exit');
 		var $logs = $('#logs .scroll');
+
+
+		$action.toggle(false)
 
 		/* Add Inputs */
 		$('#add-test').click(function() {
@@ -50,28 +55,6 @@
 		function showError(msg) {
 			$error.text(msg).toggle(true);
 		}
-
-
-		/* RESET */
-		$reset.toggle(false)
-		$reset.on('click', function(e) {
-
-			// Reactivate
-    	$testcases = $("#testcases")
-    	$testcases.removeClass("disabled")
-    	$testcases.find('.submit, #add-test').attr("disabled", false);
-
-			$(".scroll").text("")
-			$(this).toggle(false)
-
-      /* Scroll Up */
-	    $('html, body').stop().animate({
-	        'scrollTop': 0
-	    }, 800, 'swing', function () {
-	        window.location.hash = 0;
-	    });
-
-		});
 
 
 		/* SUBMIT */
@@ -182,6 +165,10 @@
 		    }, 800, 'swing', function () {
 		        window.location.hash = $target;
 		    });
+
+		    $exit.toggle(true).text("Stop Program")
+	    	$reset.toggle(false);
+
 		  };
 	  });
 
