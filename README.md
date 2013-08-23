@@ -62,10 +62,17 @@ python run.py
 
 
 You can adjust the evolution settings in the run.py file. The default settings are:  
-`population: 80  `
-`max_generations: 1  `
-`pusher_settings: (Currently uses a free Pusher account I've been using for real-time convenience in my demo. You can use your own Pusher keys or, if you don't have an account, be sure to make your channel name unique.)  `
-
+```
+SETTINGS = {
+  "population": 100,
+  "max_generations": 10,
+  "pusher_settings": {
+		...
+		(Currently uses a free Pusher account I've been using for real-time convenience in my demo. You can use your own Pusher keys or, if you don't have an account, be sure to make your channel name unique.)
+		...
+  }
+}
+```
 
 You can also increase the complexity of the output programs by adding to the assembly instruction set in `/main/asm.py`. Beware that the more complex the problem you're trying to solve or the more numbers of instructions added, the longer it takes to reach a successful solution.
 
