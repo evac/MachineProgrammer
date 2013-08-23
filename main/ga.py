@@ -70,7 +70,7 @@ def init_population(input_len):
     creator.create("Program", list, fitness=creator.FitnessMax)
     toolbox.register("instruction", asm.random_instruction, input_len)
     toolbox.register("program", tools.initRepeat, creator.Program, 
-        toolbox.instruction, 2)
+        toolbox.instruction, 1)
     toolbox.register("population", tools.initRepeat, list, toolbox.program)
 
     # Log progress
@@ -124,15 +124,15 @@ def main():
             offspring = toolbox.select(pop, len(pop))
             offspring = list(map(toolbox.clone, offspring))
 
-            # if program_size == 0:
-            #     # Add new line of instruction
-            #     pop2 = toolbox.population(n=len(offspring))
-            #     for i in range(len(offspring) - 1):
-            #         offspring[i].extend(pop2.pop())
+            if program_size == 0:
+                # Add new line of instruction
+                pop2 = toolbox.population(n=len(offspring))
+                for i in range(len(offspring) - 1):
+                    offspring[i].extend(pop2.pop())
 
-            #     program_size = g**g
-            # else:
-            #     program_size -= 1
+                program_size = g**g
+            else:
+                program_size -= 1
 
             
             # Apply crossover and mutation on the offspring
