@@ -21,12 +21,12 @@ Example
 --------------
 Let's say we want our machine "programmer" to write a program that multiplies the the first two integers, then add the third integer. Our programmer needs test cases to figure out what kind of output we're looking for. So here we have some simple test cases that cover positive integers, negative integers, and zeros.
 
-| Test Case # | Math          | Inputs        | Output       |
+|      #      | Inputs        | Function      | Output       |
 |-------------|:-------------:|:-------------:|-------------:|
-|      1      | 10 * 10 + 10  | 10, 10, 10    | 110          |
-|      2      |-10 * -10 + -10| -10, -10, -10 | 90           |
-|      4      | -10 * 10 + 10 | -10, 10, 10   | -90          |
-|      3      | 0 * 10 + 10   | 0, 10, 10     | 10           |
+|      1      | 10, 10, 10    | 10 * 10 + 10  | 110          |
+|      2      | -10, -10, -10 |-10 * -10 + -10| 90           |
+|      4      | -10, 10, 10   | -10 * 10 + 10 | -90          |
+|      3      | 0, 10, 10     | 0 * 10 + 10   | 10           |
 
 
 
