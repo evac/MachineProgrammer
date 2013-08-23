@@ -45,7 +45,7 @@ Our programmer will then utilize genetic algorithms to generate programs that it
 
 Installation
 ---------------
-Need a 64-bit Linux OS to work right out of the box. Can be adjusted to work on 32-bit Linux though.
+Will need a 64-bit Linux OS to work right out of the box. Can be adjusted to work on 32-bit Linux though.
 
 
 ```
@@ -62,12 +62,12 @@ python run.py
 
 
 You can adjust the evolution settings in the run.py file. The default settings are:  
-population: 80  
-max_generations: 1  
-pusher_settings: (Currently uses a free Pusher account I've been using for real-time convenience in my demo. You can use your own Pusher keys or, if you don't have an account, be sure to make your channel name unique.)  
+`population: 80  `
+`max_generations: 1  `
+`pusher_settings: (Currently uses a free Pusher account I've been using for real-time convenience in my demo. You can use your own Pusher keys or, if you don't have an account, be sure to make your channel name unique.)  `
 
 
-You can also increase the complexity of the output programs by adding to the assembly instruction set in /main/asm.py. Beware that the more complex the problem you're trying to solve or the more numbers of instructions added, the longer it takes to reach a successful solution.
+You can also increase the complexity of the output programs by adding to the assembly instruction set in `/main/asm.py`. Beware that the more complex the problem you're trying to solve or the more numbers of instructions added, the longer it takes to reach a successful solution.
 
 
 Under the Hood
@@ -80,7 +80,7 @@ When you click the start button, your inputs are validated, structured and packa
 We then loop through our population and randomly mutate or mate them to create a new program for the next generation. Our mutating algorithm takes in a single program and randomly shuffles the order of its instructions around. The mating algorithm takes in two programs and cross-breed them by taking parts of one program and parts of another to create a new "offspring" program. And with every generation of new programs, they are sifted through and evaluated for fitness. 
 
 ###Compiling and evaluating fitness
-Our machine programmer adds its logic to an assembly file that's initialized with the variables and a print call function to output the result. Then it tests the output against our expected output, crossing its bytes for success. If it succeeds, then it happily stops the evolution process and sends news of the success to the client-side. If it fails then, due to the unique nature of programming problems (further explained in Final Thoughts below), it skips the rest of the test cases and move on to the next experiment.
+Our machine programmer adds its logic to an assembly file that's initialized with the variables and a print call function to output the result. Then it tests the output against our expected output, crossing its bytes for success. If it succeeds, then it can happily stop the evolution process and send the fruit of its success to the client. If it fails then, due to the unique nature of programming problems (further explained in Final Thoughts below), it skips the rest of the test cases and move on to the next experiment.
 
 
 Final Thoughts
