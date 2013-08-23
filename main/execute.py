@@ -122,3 +122,7 @@ def execute(program, inputs):
     PROGRAM_COUNT += 1
 
     return (weight,)
+
+if __name__ == "__main__":
+    output = compile(FILE, LINK)
+    print output
