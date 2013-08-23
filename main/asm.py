@@ -1,14 +1,11 @@
 import random
 
-INSTRUCTIONS = ["mov", "mov", "mov", "push", "pop", "add", "sub", "cmp", "imul", "inc", "dec"]
+INSTRUCTIONS = ["mov", "add", "sub", "imul", "inc", "dec"]
 OPERANDS = ["eax", "ebx", "ecx", "edx", "ebp", "esi", "edi", "esp"]
 INST_OP_COUNT = {
     "mov": 2,
-    "push": 1,
-    "pop": 1,
     "add": 2,
     "sub": 2,
-    "cmp": 2,
     "dec": 1,
     "inc": 1,
     "imul": 2,
