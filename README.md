@@ -1,6 +1,3 @@
-Documentation in progress...
-
-
 Machine Programmer
 =========================
 
@@ -14,9 +11,9 @@ MachineProgrammer is a proof of concept that utilizes genetic algorithms to writ
 
 
 
-#####Technologies:
-**Client-Side:** jQuery, javascript, JSON  
-**Server-Side:** Python, Flask, JSON, Deap, Pusher, Envoy, NASM, gcc-multilib  
+**Technologies**  
+Client-Side: *jQuery, javascript, JSON  *
+Server-Side: *Python, Flask, JSON, Deap, Pusher, Envoy, NASM, gcc-multilib  *
 
 
 
@@ -68,7 +65,9 @@ SETTINGS = {
   "max_generations": 10,
   "pusher_settings": {
 		...
-		(Currently uses a free Pusher account I've been using for real-time convenience in my demo. You can use your own Pusher keys or, if you don't have an account, be sure to make your channel name unique.)
+		(Currently uses a free Pusher account I've been using for real-time convenience
+			in my demo. You can use your own Pusher keys or, if you don't have an account,
+			be sure to make your channel name unique.)
 		...
   }
 }
