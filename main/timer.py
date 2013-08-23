@@ -3,10 +3,11 @@ from push import Pusher
 
 START = None
 line = "="*40
-pusher = Pusher()
 
 
 def log (msg, elapsed=None):
+    pusher = Pusher()
+    pusher.add("<br />")
     pusher.addstyle("="*34)
     pusher.addstyle(msg)
     if elapsed:
