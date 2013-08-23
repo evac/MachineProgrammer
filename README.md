@@ -17,16 +17,17 @@ Server-Side: _Python, Flask, JSON, Deap, Pusher, Envoy, NASM, gcc-multilib_
 
 
 
-Usage Example
+Example
 --------------
 Let's say we want our machine "programmer" to write a program that multiplies the the first two integers, then add the third integer. Our programmer needs test cases to figure out what kind of output we're looking for. So here we have some simple test cases that cover positive integers, negative integers, and zeros.
 
-| Test Case # | Inputs        | Output       |
-|-------------|:-------------:|-------------:|
-|      1      | 10, 10, 10    | 110          |
-|      2      | -10, -10, -10 | 90           |
-|      4      | -10, 10, 10   | -90          |
-|      3      | 0, 10, 10     | 10           |
+| Test Case # | Math          | Inputs        | Output       |
+|-------------|:-------------:|:-------------:|-------------:|
+|      1      | 10 * 10 + 10  | 10, 10, 10    | 110          |
+|      2      |-10 * -10 + -10| -10, -10, -10 | 90           |
+|      4      | -10 * 10 + 10 | -10, 10, 10   | -90          |
+|      3      | 0 * 10 + 10   | 0, 10, 10     | 10           |
+
 
 
 In this prettified interface, we would enter our test cases as thus:
@@ -40,7 +41,29 @@ Our programmer will then utilize genetic algorithms to generate programs that it
 ![alt text](https://raw.github.com/evac/MachineProgrammer/master/screenshots/output.png "Output")
 
 
-Installation
+Under the Hood
+---------------
+
+###Creating a population of programs
+When you click the start button, your inputs are validated, structured and packaged as a chunk of JSON data to the server. Upon receiving the test case inputs, the server will initialize the evolution settings and trigger the birth of many little program instructions. Deap, a genetic algorithm library, is used as the base class for creating our program class with random assembly instructions and operands. Our population is then generated and built out of that default blueprint.
+
+###Evolving codes with the genetic algorithms
+We then loop through our population and randomly mutate or mate them to create a new program for the next generation. Our mutating algorithm takes in a single program and randomly shuffles the order of its instructions around. The mating algorithm takes in two programs and cross-breed them by taking parts of one program and parts of another to create a new "offspring" program. And with every generation of new programs, they are sifted through and evaluated for fitness. 
+
+###Compiling and evaluating fitness
+Our machine programmer adds its logic to an assembly file that's initialized with the variables and a print call function to output the result. Then it tests the output against our expected output, crossing its bytes for success. If it succeeds, then it can happily stop the evolution process and send the fruit of its success to the client. If it fails then, due to the unique nature of programming problems (further explained in Final Thoughts below), it skips the rest of the test cases and move on to the next experiment.
+
+
+
+Final Thoughts
+---------------
+
+In progress...
+
+
+
+
+Usage
 ---------------
 Will need a 64-bit Linux OS to work right out of the box. Can be adjusted to work on 32-bit Linux though.
 
@@ -74,22 +97,3 @@ SETTINGS = {
 ```
 
 You can also increase the complexity of the output programs by adding to the assembly instruction set in `/main/asm.py`. Beware that the more complex the problem you're trying to solve or the more numbers of instructions added, the longer it takes to reach a successful solution.
-
-
-Under the Hood
----------------
-
-###Creating a population of programs
-When you click the start button, your inputs are validated, structured and packaged as a chunk of JSON data to the server. Upon receiving the test case inputs, the server will initialize the evolution settings and trigger the birth of many little program instructions. Deap, a genetic algorithm library, is used as the base class for creating our program class with random assembly instructions and operands. Our population is then generated and built out of that default blueprint.
-
-###Evolving codes with the genetic algorithms
-We then loop through our population and randomly mutate or mate them to create a new program for the next generation. Our mutating algorithm takes in a single program and randomly shuffles the order of its instructions around. The mating algorithm takes in two programs and cross-breed them by taking parts of one program and parts of another to create a new "offspring" program. And with every generation of new programs, they are sifted through and evaluated for fitness. 
-
-###Compiling and evaluating fitness
-Our machine programmer adds its logic to an assembly file that's initialized with the variables and a print call function to output the result. Then it tests the output against our expected output, crossing its bytes for success. If it succeeds, then it can happily stop the evolution process and send the fruit of its success to the client. If it fails then, due to the unique nature of programming problems (further explained in Final Thoughts below), it skips the rest of the test cases and move on to the next experiment.
-
-
-Final Thoughts
----------------
-
-In progress...
