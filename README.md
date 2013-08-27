@@ -54,22 +54,9 @@ We then loop through our population and randomly mutate or mate them to create a
 Our machine programmer then compiles and runs the program to get an output, which it tests against our expected output. If it succeeds, then it can happily stop the evolution process and send the fruit of its success to the client. If it fails then it moves on to the next experiment.
 
 
-
-Final Thoughts
----------------
-
-As mentioned in the introduction, the goal was to create a program that can program. Using genetic algorithms was just one of several approaches I wanted to experiment with and see how far it could go. While it's certainly been a fascinating and educational approach to implement, there are several weaknesses that will prevent me from pursuing this approach in my next version.
-
-1) Does not scale well with complexity. The more complex the problem or number of factors it has to deal with, the longer it takes to reach a solution. This approach may work better for a single big objective where it can take its time, but not so much for small, immediate tasks.
-
-2) Not able to take advantage of the evolutionary benefits. The main advantage of genetic algorithms is the ability for the quality of the solutions to improve with every generation. However, programs are either successful or not, and there's no in-between like having 50% correct code. The closest measure for incremental improvements are the number of test cases it can pass, which is not exactly an ideal fitness evaluation to rely on.
-
-In future versions, I will be exploring other approaches. A few that I have in mind is reinforcement learning, simulated annealing and neural networks.
-
-
 Usage
 ---------------
-Will need a 64-bit Linux OS to work right out of the box. Can be adjusted to work on 32-bit Linux though.
+Will need a Linux OS to work right out of the box. Works for both 32-bit and 64-bit.
 
 
 ```
@@ -101,3 +88,16 @@ SETTINGS = {
 ```
 
 You can also increase the complexity of the output programs by adding to the assembly instruction set in `/main/asm.py`. Beware that the more complex the problem you're trying to solve or the more numbers of instructions added, the longer it takes to reach a successful solution.
+
+
+
+Final Thoughts
+---------------
+
+As mentioned in the introduction, the goal was to create a program that can program. Using genetic algorithms was just one of several approaches I wanted to experiment with and see how far it could go. While it's certainly been a fascinating and educational approach to implement, there are several weaknesses that will prevent me from pursuing this approach in my next version.
+
+1) Does not scale well with complexity. The more complex the problem or number of factors it has to deal with, the longer it takes to reach a solution. This approach may work better for a single big objective where it can take its time, but not so much for small, immediate tasks.
+
+2) Not able to take advantage of the evolutionary benefits. The main advantage of genetic algorithms is the ability for the quality of the solutions to improve with every generation. However, programs are either successful or not, and there's no in-between like having 50% correct code. The closest measure for incremental improvements are the number of test cases it can pass, which is not exactly an ideal fitness evaluation to rely on.
+
+In future versions, I will be exploring other approaches. A few that I have in mind is reinforcement learning, simulated annealing and neural networks.
