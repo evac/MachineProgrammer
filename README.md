@@ -45,22 +45,26 @@ Under the Hood
 ---------------
 
 ###Creating a population of programs
-When you click the start button, your inputs are validated, structured and packaged as a chunk of JSON data to the server. Upon receiving the test case inputs, the server will initialize the evolution settings and trigger the birth of many little program instructions. Deap, a genetic algorithm library, is used as the base class for creating our program class with random assembly instructions and operands. Our population is then generated and built out of that default blueprint.
+The server begins by initializing evolution settings such as population and max generations. It then triggers the birth of many little program instructions. Deap, a genetic algorithm library, is used as the base class for creating our program class with random assembly instructions and operands. Our population is then generated and built out of that default blueprint.
 
 ###Evolving codes with the genetic algorithms
 We then loop through our population and randomly mutate or mate them to create a new program for the next generation. Our mutating algorithm takes in a single program and randomly shuffles the order of its instructions around. The mating algorithm takes in two programs and cross-breed them by taking parts of one program and parts of another to create a new "offspring" program. And with every generation of new programs, they are sifted through and evaluated for fitness. 
 
 ###Compiling and evaluating fitness
-Our machine programmer adds its logic to an assembly file that's initialized with the variables and a print call function to output the result. Then it tests the output against our expected output, crossing its bytes for success. If it succeeds, then it can happily stop the evolution process and send the fruit of its success to the client. If it fails then, due to the unique nature of programming problems (further explained in Final Thoughts below), it skips the rest of the test cases and move on to the next experiment.
+Our machine programmer then compiles and runs the program to get an output, which it tests against our expected output. If it succeeds, then it can happily stop the evolution process and send the fruit of its success to the client. If it fails then it moves on to the next experiment.
 
 
 
 Final Thoughts
 ---------------
 
-In progress...
+As mentioned in the introduction, the goal was to create a program that can program. Using genetic algorithms was just one of several approaches I wanted to experiment with and see how far it could go. While it's certainly been a fascinating and educational approach to implement, there are several weaknesses that will prevent me from pursuing this approach in my next version.
 
+1) Does not scale well with complexity. The more complex the problem or number of factors it has to deal with, the longer it takes to reach a solution. This approach may work better for a single big objective where it can take its time, but not so much for small, immediate tasks.
 
+2) Not able to take advantage of the evolutionary benefits. The main advantage of genetic algorithms is the ability for the quality of the solutions to improve with every generation. However, programs are either successful or not, and there's no in-between like having 50% correct code. The closest measure for incremental improvements are the number of test cases it can pass, which is not exactly an ideal fitness evaluation to rely on.
+
+In future versions, I will be exploring other approaches. A few that I have in mind is reinforcement learning, simulated annealing and neural networks.
 
 
 Usage
