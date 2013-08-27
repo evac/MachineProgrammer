@@ -1,9 +1,9 @@
 import os
+import struct
 import envoy
 import template
 import asm
 from push import Pusher
-
 FILE = "output"
 LINK = "main"
 PROGRAM_COUNT = 1
@@ -66,9 +66,14 @@ def match_result(result, test):
 
 # compile assembly file and return output
 def compile(filename, link):
+    OS_bit = struct.calcsize("P") * 8 # get 32 or 64 bit mode of OS
+    compat_bits = ""
+
+    if OS_bit == 64:
+        compat_bits = "-m32"
 
     comp = "nasm -f elf %s.asm" % filename
-    gcc = "gcc -m32 -o %s %s.o" % (filename, filename)
+    gcc = "gcc %s -o %s %s.o" % (compat_bits, filename, filename)
 
     # compile assembly file
     os.system(comp)
