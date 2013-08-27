@@ -59,6 +59,7 @@ Usage
 Will need a Linux OS to work right out of the box. Works for both 32-bit and 64-bit.
 
 
+The following are installations on a 64-bit Linux. If you're on 32-bit, replace gcc-multilib with gcc if you don't already have it (it's usually in Linux already by default).
 ```
 apt-get install nasm
 apt-get install gcc-multilib
