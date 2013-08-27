@@ -13,7 +13,7 @@ MachineProgrammer is a proof of concept that utilizes genetic algorithms to writ
 
 **Technologies**  
 Client-Side: _jQuery, javascript, JSON_  
-Server-Side: _Python, Flask, JSON, Deap, Pusher, Envoy, NASM, GCC  
+Server-Side: _Python, x86 Assembly, Flask, JSON, Deap, Pusher, Envoy, NASM, GCC  
 
 
 
