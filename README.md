@@ -59,7 +59,7 @@ Usage
 Will need a Linux OS to work right out of the box. Works for both 32-bit and 64-bit.
 
 
-The following are installations on a 64-bit Linux. If you're on 32-bit, replace gcc-multilib with gcc if you don't already have it (it's usually in Linux already by default).
+The following are installation instructions on a 64-bit Linux. If you're on 32-bit, replace 'gcc-multilib' with 'gcc' if you don't already have it (it's usually in Linux by default).
 ```
 apt-get install nasm
 apt-get install gcc-multilib
@@ -101,4 +101,4 @@ As mentioned in the introduction, the goal was to create a program that can prog
 
 2) Not able to take advantage of the evolutionary benefits. The main advantage of genetic algorithms is the ability for the quality of the solutions to improve with every generation. However, programs are either successful or not, and there's no in-between like having 50% correct code. The closest measure for incremental improvements are the number of test cases it can pass, which is not exactly an ideal fitness evaluation to rely on.
 
-In future versions, few that I plan to explore is reinforcement learning, simulated annealing and neural networks.
+In future versions, a few approaches that I plan to explore are reinforcement learning, simulated annealing and neural networks.
