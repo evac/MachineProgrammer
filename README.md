@@ -78,13 +78,6 @@ You can adjust the evolution settings in the run.py file. The default settings a
 SETTINGS = {
   "population": 100,
   "max_generations": 10,
-  "pusher_settings": {
-		...
-		(Currently uses a free Pusher account I've been using for real-time convenience
-			in my demo. You can use your own Pusher keys or, if you don't have an account,
-			be sure to make your channel name unique.)
-		...
-  }
 }
 ```
 
